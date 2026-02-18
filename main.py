@@ -42,20 +42,27 @@ def main():
     final_post = f"{hook}\n\n{body}\n\n{tags}"
     
     print("\n--- PREVIEW ---")
-    print(final_post)
-    print("---------------\n")
+    print("\n--- OPTIONS ---")
+    print("[y] Publish to LinkedIn")
+    print("[s] Skip (Mark as skipped)")
+    print("[q] Quit")
     
-    confirm = input("Publish to LinkedIn? (y/n): ")
-    if confirm.lower() == 'y':
+    choice = input("\nAction: ").lower()
+    
+    if choice == 'y':
         res = publisher.post(final_post)
         if res.status_code == 201:
             cur.execute("UPDATE ideas SET status='posted' WHERE id=?", (idea_id,))
-            conn.commit()
             print("🚀 Successfully published!")
         else:
-            print(f"❌ Actual Post Error: {res.text}")
-
+            print(f"❌ Error: {res.text}")
+            
+    elif choice == 's':
+        cur.execute("UPDATE ideas SET status='skipped' WHERE id=?", (idea_id,))
+        print("⏭️ Idea skipped. It won't appear again.")
+        
+    conn.commit()
     conn.close()
-
+    
 if __name__ == "__main__":
     main()
