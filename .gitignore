@@ -1,0 +1,23 @@
+# Secrets and Config
+.env
+config.json
+
+# Local Database
+data/*.db
+data/*.db-journal
+
+# Python Environment
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+build/
+dist/
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.dby
+
